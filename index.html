@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horologium - Orologi di Lusso & Boutique</title>
+    <style>
+        /* RESET E STILI DI BASE */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* HEADER E NAVIGAZIONE */
+        header {
+            background-color: #1a1a1a;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #d4af37;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+        /* SEZIONE HERO */
+        .hero {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80') center/cover;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            color: #ccc;
+            max-width: 650px;
+            margin: 0 auto 1.5rem auto;
+            font-size: 1.1rem;
+        }
+
+        /* LAYOUT GENERICO */
+        .container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #d4af37;
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #999;
+            margin-bottom: 3rem;
+            font-size: 1rem;
+        }
+
+        /* SEZIONE STORIA DEL BRAND */
+        .storia-box {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 2.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .storia-text {
+            flex: 1 1 400px;
+        }
+
+        .storia-text h3 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .storia-text p {
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+
+        .storia-img {
+            flex: 1 1 350px;
+            max-width: 100%;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        /* CATALOGO OROLOGI */
+        .grid-orologi {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.15);
+        }
+
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .card-price {
+            color: #d4af37;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            text-align: center;
+            background-color: #d4af37;
+            color: #121212;
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #f1c40f;
+        }
+
+        /* PAGINE DETTAGLIO OROLOGIO (GESTITE CON :TARGET) */
+        .page-dettaglio {
+            display: none;
+            padding: 3rem 1.5rem;
+        }
+
+        .page-dettaglio:target {
+            display: block;
+        }
+
+        .page-dettaglio:target ~ #catalogo {
+            display: none;
+        }
+
+        .dettaglio-content {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 2.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+        }
+
+        .dettaglio-img {
+            flex: 1 1 350px;
+            max-width: 100%;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .dettaglio-info {
+            flex: 1 1 350px;
+        }
+
+        .dettaglio-info h2 {
+            color: #d4af37;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dettaglio-info .prezzo {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .dettaglio-info ul {
+            margin: 1.5rem 0;
+            padding-left: 1.2rem;
+        }
+
+        .dettaglio-info li {
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+
+        .btn-back {
+            background-color: #333;
+            color: #fff;
+            margin-top: 1rem;
+        }
+
+        .btn-back:hover {
+            background-color: #444;
+        }
+
+        /* SEZIONE CONTATTI E BOUTIQUE */
+        .contatti-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-card, .form-card {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .info-card h3, .form-card h3 {
+            color: #d4af37;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .info-item {
+            margin-bottom: 1.2rem;
+        }
+
+        .info-item strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 0.2rem;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 180px;
+            background-color: #2a2a2a;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            border: 1px dashed #444;
+            margin-top: 1rem;
+        }
+
+        /* FORM CONTATTI */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #121212;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #1a1a1a;
+            border-top: 1px solid #333;
+            margin-top: 5rem;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">Horologium</a>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#storia">Storia</a>
+            <a href="#collezione">Collezione</a>
+            <a href="#contatti">Boutique</a>
+        </nav>
+    </header>
+
+    <!-- DETTAGLI OROLOGIO 1 -->
+    <div id="orologio-1" class="page-dettaglio container">
+        <div class="dettaglio-content">
+            <img src="https://finwatchstraps.com/cdn/shop/articles/designing-the-perfect-watch-strap-with-finwatchstraps-your-timepieces-ideal-companion-572643.jpg?v=1692588236" alt="Chronos Classic" class="dettaglio-img">
+            <div class="dettaglio-info">
+                <h2>Chronos Classic</h2>
+                <div class="prezzo">€ 1.250,00</div>
+                <p>Un segnatempo elegante progettato per chi apprezza lo stile intramontabile e la precisione artigianale.</p>
+                <ul>
+                    <li><strong>Cassa:</strong> Acciaio Inox 40mm</li>
+                    <li><strong>Movimento:</strong> Automatico Svizzero</li>
+                    <li><strong>Cinturino:</strong> Vera Pelle Marrone</li>
+                    <li><strong>Vetro:</strong> Zaffiro antigraffio</li>
+                    <li><strong>Resistenza all'acqua:</strong> 50 metri</li>
+                </ul>
+                <a href="#collezione" class="btn btn-back">← Torna alla Collezione</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- DETTAGLI OROLOGIO 2 -->
+    <div id="orologio-2" class="page-dettaglio container">
+        <div class="dettaglio-content">
+            <img src="https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=600&q=80" alt="Ocean Diver" class="dettaglio-img">
+            <div class="dettaglio-info">
+                <h2>Ocean Diver Professional</h2>
+                <div class="prezzo">€ 2.100,00</div>
+                <p>Progettato per le esplorazioni sottomarine più estreme, unisce massima visibilità e tenuta stagna impeccabile.</p>
+                <ul>
+                    <li><strong>Cassa:</strong> Titanio 42mm</li>
+                    <li><strong>Movimento:</strong> Calibro Subacqueo Automatico</li>
+                    <li><strong>Cinturino:</strong> Gomma ad alta resistenza</li>
+                    <li><strong>Lunetta:</strong> Ceramica unidirezionale</li>
+                    <li><strong>Resistenza all'acqua:</strong> 300 metri</li>
+                </ul>
+                <a href="#collezione" class="btn btn-back">← Torna alla Collezione</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- DETTAGLI OROLOGIO 3 -->
+    <div id="orologio-3" class="page-dettaglio container">
+        <div class="dettaglio-content">
+            <img src="https://lorologiese.com/wp-content/uploads/2024/01/UNIVERSAL-AERO-COMPAX-22287-AP-SLV-BT-R-283-.jpg" alt="Aero Chrono" class="dettaglio-img">
+            <div class="dettaglio-info">
+                <h2>Aero Chronograph</h2>
+                <div class="prezzo">€ 3.450,00</div>
+                <p>Ispirato all'aviazione classica, offre funzionalità cronografiche avanzate racchiuse in un design audace.</p>
+                <ul>
+                    <li><strong>Cassa:</strong> Acciaio PVD Nero 44mm</li>
+                    <li><strong>Movimento:</strong> Cronografo Meccanico</li>
+                    <li><strong>Cinturino:</strong> Maglia di Acciaio</li>
+                    <li><strong>Quadrante:</strong> Luminescenza Super-LumiNova</li>
+                    <li><strong>Resistenza all'acqua:</strong> 100 metri</li>
+                </ul>
+                <a href="#collezione" class="btn btn-back">← Torna alla Collezione</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- DETTAGLI OROLOGIO 4 -->
+    <div id="orologio-4" class="page-dettaglio container">
+        <div class="dettaglio-content">
+            <img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=600&q=80" alt="Heritage Tourbillon" class="dettaglio-img">
+            <div class="dettaglio-info">
+                <h2>Heritage Tourbillon</h2>
+                <div class="prezzo">€ 8.900,00</div>
+                <p>Il vertice dell'alta orologeria: meccanismo Tourbillon a vista con rifiniture a mano e riserva di carica di 72 ore.</p>
+                <ul>
+                    <li><strong>Cassa:</strong> Oro Rosa 18k 41mm</li>
+                    <li><strong>Movimento:</strong> Tourbillon Manuale</li>
+                    <li><strong>Cinturino:</strong> Alligatore Nero</li>
+                    <li><strong>Fondello:</strong> Zaffiro Trasparente</li>
+                    <li><strong>Resistenza all'acqua:</strong> 30 metri</li>
+                </ul>
+                <a href="#collezione" class="btn btn-back">← Torna alla Collezione</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- DETTAGLI OROLOGIO 5 -->
+    <div id="orologio-5" class="page-dettaglio container">
+        <div class="dettaglio-content">
+            <img src="https://img01.ztat.net/article/spp-media-p1/4fb608be70c0489e9011a2b22bf5d856/e1e07b22679849bab6fb887039d7876d.jpg?imwidth=1800" alt="Lunar Phase" class="dettaglio-img">
+            <div class="dettaglio-info">
+                <h2>Lunar Phase Excellence</h2>
+                <div class="prezzo">€ 4.600,00</div>
+                <p>Un'opera d'arte astronomica con complicazione delle fasi lunari ed esecuzione del quadrante in madreperla.</p>
+                <ul>
+                    <li><strong>Cassa:</strong> Acciaio Inox Lucidato 41mm</li>
+                    <li><strong>Movimento:</strong> Automatico con Fasi Lunari</li>
+                    <li><strong>Cinturino:</strong> Pelle Blu Notte</li>
+                    <li><strong>Vetro:</strong> Zaffiro Antiriflesso</li>
+                    <li><strong>Resistenza all'acqua:</strong> 50 metri</li>
+                </ul>
+                <a href="#collezione" class="btn btn-back">← Torna alla Collezione</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- DETTAGLI OROLOGIO 6 -->
+    <div id="orologio-6" class="page-dettaglio container">
+        <div class="dettaglio-content">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvvZbbaZ6AT1lPa12gpKWmcOBBe2u5-WPbvkRCOeQ54e-Shj833833OrlZ&s=10" alt="Vanguard Skeleton" class="dettaglio-img">
+            <div class="dettaglio-info">
+                <h2>Vanguard Skeleton</h2>
+                <div class="prezzo">€ 5.800,00</div>
+                <p>Architettura d'avanguardia con movimento scheletrato a vista che rivela l'armonia interna dell'orologio.</p>
+                <ul>
+                    <li><strong>Cassa:</strong> Carbonio e Titanio 43mm</li>
+                    <li><strong>Movimento:</strong> Meccanico Scheletrato Manuale</li>
+                    <li><strong>Cinturino:</strong> Caucciù e Tessuto Tecnico</li>
+                    <li><strong>Quadrante:</strong> Trasparente in Zaffiro</li>
+                    <li><strong>Resistenza all'acqua:</strong> 100 metri</li>
+                </ul>
+                <a href="#collezione" class="btn btn-back">← Torna alla Collezione</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- STRUTTURA PRINCIPALE DEL SITO -->
+    <div id="catalogo">
+        <!-- HERO -->
+        <section class="hero">
+            <h1>L'Arte del Tempo al Tuo Polso</h1>
+            <p>Esplora la nostra selezione esclusiva di orologi meccanici ed estetica di altissima precisione.</p>
+            <a href="#collezione" class="btn">Scopri la Collezione</a>
+        </section>
+
+        <!-- SEZIONE STORIA -->
+        <section id="storia" class="container">
+            <h2 class="section-title">La Nostra Storia</h2>
+            <p class="section-subtitle">Oltre un secolo di passione per l'alta orologeria</p>
+
+            <div class="storia-box">
+                <div class="storia-text">
+                    <h3>Tradizione dal 1898</h3>
+                    <p>Fondata nel cuore della Svizzera, Horologium nasce con una missione precisa: unire l'antica arte dell'assemblaggio manuale alle moderne innovazioni tecnologiche.</p>
+                    <p>Ogni componente dei nostri orologi viene testato e rifinito a mano dai nostri maestri orologiai per garantire una durata nel tempo e un'accuratezza senza compromessi.</p>
+                    <p>Crediamo che un orologio non sia un semplice oggetto, ma una testimonianza di stile personale e memoria tramandata di generazione in generazione.</p>
+                </div>
+                <img src="https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=600&q=80" alt="Laboratorio Orologi" class="storia-img">
+            </div>
+        </section>
+
+        <!-- SEZIONE CATALOGO -->
+        <section id="collezione" class="container">
+            <h2 class="section-title">La Collezione</h2>
+            <p class="section-subtitle">Scegli il modello che meglio definisce il tuo stile</p>
+
+            <div class="grid-orologi">
+                <!-- Card 1 -->
+                <div class="card">
+                    <img src="https://lorologiese.com/wp-content/uploads/2024/01/UNIVERSAL-AERO-COMPAX-22287-AP-SLV-BT-R-283-.jpg" alt="Chronos Classic">
+                    <div class="card-content">
+                        <h3 class="card-title">Chronos Classic</h3>
+                        <div class="card-price">€ 1.250,00</div>
+                        <p class="card-desc">Design classico con movimento automatico e cinturino in pelle finemente lavorata.</p>
+                        <a href="#orologio-1" class="btn">Vedi Dettagli</a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=600&q=80" alt="Ocean Diver">
+                    <div class="card-content">
+                        <h3 class="card-title">Ocean Diver Pro</h3>
+                        <div class="card-price">€ 2.100,00</div>
+                        <p class="card-desc">Resistente e impermeabile, ideale per chi ama le immersioni e l'avventura.</p>
+                        <a href="#orologio-2" class="btn">Vedi Dettagli</a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card">
+                    <img src="https://watchesofknightsbridge.com/wp-content/uploads/2023/12/CUR150.jpg" alt="Aero Chrono">
+                    <div class="card-content">
+                        <h3 class="card-title">Aero Chronograph</h3>
+                        <div class="card-price">€ 3.450,00</div>
+                        <p class="card-desc">Ispirato al mondo dell'aviazione, con cronometro integrato di alta precisione.</p>
+                        <a href="#orologio-3" class="btn">Vedi Dettagli</a>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=600&q=80" alt="Heritage Tourbillon">
+                    <div class="card-content">
+                        <h3 class="card-title">Heritage Tourbillon</h3>
+                        <div class="card-price">€ 8.900,00</div>
+                        <p class="card-desc">Capolavoro di meccanica in oro rosa con complicazione Tourbillon a vista.</p>
+                        <a href="#orologio-4" class="btn">Vedi Dettagli</a>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="card">
+                    <img src="https://img01.ztat.net/article/spp-media-p1/4fb608be70c0489e9011a2b22bf5d856/e1e07b22679849bab6fb887039d7876d.jpg?imwidth=1800" alt="Lunar Phase">
+                    <div class="card-content">
+                        <h3 class="card-title">Lunar Phase Excellence</h3>
+                        <div class="card-price">€ 4.600,00</div>
+                        <p class="card-desc">Complicazione con fasi lunari e finiture in oro e pelle blu notte.</p>
+                        <a href="#orologio-5" class="btn">Vedi Dettagli</a>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="card">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvvZbbaZ6AT1lPa12gpKWmcOBBe2u5-WPbvkRCOeQ54e-Shj833833OrlZ&s=10" alt="Vanguard Skeleton">
+                    <div class="card-content">
+                        <h3 class="card-title">Vanguard Skeleton</h3>
+                        <div class="card-price">€ 5.800,00</div>
+                        <p class="card-desc">Design moderno con cassa in titanio e meccanismo scheletrato a vista.</p>
+                        <a href="#orologio-6" class="btn">Vedi Dettagli</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEZIONE BOUTIQUE & CONTATTI -->
+        <section id="contatti" class="container">
+            <h2 class="section-title">Boutique & Contatti</h2>
+            <p class="section-subtitle">Vieni a trovarci o richiedi un appuntamento con i nostri esperti</p>
+
+            <div class="contatti-grid">
+                <!-- Informazioni di contatto -->
+                <div class="info-card">
+                    <h3>La Nostra Boutique</h3>
+                    <div class="info-item">
+                        <strong>Indirizzo:</strong>
+                        Via Montenapoleone 14, 20121 Milano (MI)
+                    </div>
+                    <div class="info-item">
+                        <strong>Orari di Apertura:</strong>
+                        Lunedì - Sabato: 10:00 - 19:30<br>Domenica: Su appuntamento
+                    </div>
+                    <div class="info-item">
+                        <strong>Contatti Diretti:</strong>
+                        Telefono: +39 02 1234 5678<br>Email: boutique@horologium.it
+                    </div>
+                    <div class="map-placeholder">
+                        📍 Mappa Boutique Milano
+                    </div>
+                </div>
+
+                <!-- Modulo di messaggio -->
+                <div class="form-card">
+                    <h3>Scrivici un Messaggio</h3>
+                    <form onsubmit="event.preventDefault(); alert('Messaggio inviato con successo! Ti risponderemo a breve.');">
+                        <div class="form-group">
+                            <label for="nome">Nome e Cognome</label>
+                            <input type="text" id="nome" placeholder="Es. Mario Rossi" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="nome@esempio.it" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="messaggio">Messaggio o Richiesta Appuntamento</label>
+                            <textarea id="messaggio" rows="4" placeholder="Come possiamo aiutarti?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Invia Richiesta</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Horologium - Tutti i diritti riservati.</p>
+    </footer>
+
+</body>
+</html>
