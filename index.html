@@ -3,644 +3,375 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horologium - Orologi di Lusso & Boutique</title>
+    <title>Tempus - La Storia dell'Orologio</title>
+    <!-- Tailwind CSS CDN per la grafica e lo stile -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* RESET E STILI DI BASE */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        
         body {
-            background-color: #121212;
-            color: #e0e0e0;
-            line-height: 1.6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b0b10;
+            color: #e2e8f0;
         }
 
-        /* HEADER E NAVIGAZIONE */
-        header {
-            background-color: #1a1a1a;
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid #333;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .font-serif-title {
+            font-family: 'Cinzel', serif;
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #d4af37;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-decoration: none;
+        /* Gradiente Dorato Orologeria */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fef08a 0%, #d97706 50%, #b45309 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        nav a {
-            color: #e0e0e0;
-            text-decoration: none;
-            margin-left: 1.5rem;
-            font-weight: 500;
-            transition: color 0.3s;
+        .gold-border {
+            border-color: rgba(217, 119, 6, 0.3);
         }
 
-        nav a:hover {
-            color: #d4af37;
+        .gold-card-hover:hover {
+            border-color: rgba(245, 158, 11, 0.8);
+            box-shadow: 0 10px 30px -10px rgba(217, 119, 6, 0.25);
+            transform: translateY(-4px);
         }
 
-        /* SEZIONE HERO */
-        .hero {
-            text-align: center;
-            padding: 5rem 2rem;
-            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80') center/cover;
+        .bg-glass {
+            background: rgba(21, 21, 30, 0.7);
+            backdrop-filter: blur(12px);
         }
 
-        .hero h1 {
-            font-size: 2.8rem;
-            color: #ffffff;
-            margin-bottom: 1rem;
+        /* Animazione ingranaggio */
+        @keyframes rotateGear {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .gear-rotate {
+            animation: rotateGear 40s linear infinite;
+            transform-origin: center;
+        }
+        .gear-rotate-reverse {
+            animation: rotateGear 25s linear infinite reverse;
+            transform-origin: center;
         }
 
-        .hero p {
-            color: #ccc;
-            max-width: 650px;
-            margin: 0 auto 1.5rem auto;
-            font-size: 1.1rem;
-        }
-
-        /* LAYOUT GENERICO */
-        .container {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 0 1.5rem;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 1rem;
-            color: #d4af37;
-            font-size: 2.2rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #999;
-            margin-bottom: 3rem;
-            font-size: 1rem;
-        }
-
-        /* SEZIONE STORIA DEL BRAND */
-        .storia-box {
-            background-color: #1e1e1e;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 2.5rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .storia-text {
-            flex: 1 1 400px;
-        }
-
-        .storia-text h3 {
-            color: #d4af37;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .storia-text p {
-            margin-bottom: 1rem;
-            color: #ccc;
-        }
-
-        .storia-img {
-            flex: 1 1 350px;
-            max-width: 100%;
-            border-radius: 6px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-
-        /* CATALOGO OROLOGI */
-        .grid-orologi {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background-color: #1e1e1e;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #333;
-            transition: transform 0.3s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.15);
-        }
-
-        .card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-
-        .card-content {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .card-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-            color: #fff;
-        }
-
-        .card-price {
-            color: #d4af37;
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .card-desc {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-
-        .btn {
-            display: inline-block;
-            text-align: center;
-            background-color: #d4af37;
-            color: #121212;
-            padding: 0.75rem 1rem;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #f1c40f;
-        }
-
-        /* PAGINE DETTAGLIO OROLOGIO (GESTITE CON :TARGET) */
-        .page-dettaglio {
+        .section-view {
             display: none;
-            padding: 3rem 1.5rem;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
         }
 
-        .page-dettaglio:target {
+        .section-view.active {
             display: block;
-        }
-
-        .page-dettaglio:target ~ #catalogo {
-            display: none;
-        }
-
-        .dettaglio-content {
-            background-color: #1e1e1e;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 2.5rem;
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2.5rem;
-        }
-
-        .dettaglio-img {
-            flex: 1 1 350px;
-            max-width: 100%;
-            border-radius: 6px;
-            object-fit: cover;
-        }
-
-        .dettaglio-info {
-            flex: 1 1 350px;
-        }
-
-        .dettaglio-info h2 {
-            color: #d4af37;
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .dettaglio-info .prezzo {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #fff;
-            margin-bottom: 1rem;
-        }
-
-        .dettaglio-info ul {
-            margin: 1.5rem 0;
-            padding-left: 1.2rem;
-        }
-
-        .dettaglio-info li {
-            margin-bottom: 0.5rem;
-            color: #ccc;
-        }
-
-        .btn-back {
-            background-color: #333;
-            color: #fff;
-            margin-top: 1rem;
-        }
-
-        .btn-back:hover {
-            background-color: #444;
-        }
-
-        /* SEZIONE CONTATTI E BOUTIQUE */
-        .contatti-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-
-        .info-card, .form-card {
-            background-color: #1e1e1e;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 2rem;
-        }
-
-        .info-card h3, .form-card h3 {
-            color: #d4af37;
-            margin-bottom: 1.5rem;
-            font-size: 1.4rem;
-        }
-
-        .info-item {
-            margin-bottom: 1.2rem;
-        }
-
-        .info-item strong {
-            color: #fff;
-            display: block;
-            margin-bottom: 0.2rem;
-        }
-
-        .map-placeholder {
-            width: 100%;
-            height: 180px;
-            background-color: #2a2a2a;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            border: 1px dashed #444;
-            margin-top: 1rem;
-        }
-
-        /* FORM CONTATTI */
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.4rem;
-            color: #ccc;
-            font-size: 0.9rem;
-        }
-
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #121212;
-            border: 1px solid #333;
-            border-radius: 4px;
-            color: #fff;
-            font-size: 1rem;
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: #d4af37;
-        }
-
-        /* FOOTER */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background-color: #1a1a1a;
-            border-top: 1px solid #333;
-            margin-top: 5rem;
-            color: #777;
+            opacity: 1;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-black">
 
-    <header>
-        <a href="#" class="logo">Horologium</a>
-        <nav>
-            <a href="#">Home</a>
-            <a href="#storia">Storia</a>
-            <a href="#collezione">Collezione</a>
-            <a href="#contatti">Boutique</a>
-        </nav>
+    <!-- NAVIGAZIONE -->
+    <header class="sticky top-0 z-50 bg-glass border-b border-amber-900/30 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Logo -->
+            <button onclick="showSection('home')" class="flex items-center gap-3 text-left group">
+                <svg class="w-8 h-8 text-amber-500 gear-rotate" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="font-serif-title font-bold text-2xl tracking-wider gold-gradient-text">TEMPUS</span>
+            </button>
+
+            <!-- Menu Desktop -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <button onclick="showSection('home')" class="hover:text-amber-400 transition-colors">Home</button>
+                <button onclick="showSection('origini')" class="hover:text-amber-400 transition-colors">Origini Antiche</button>
+                <button onclick="showSection('inventori')" class="hover:text-amber-400 transition-colors">Grandi Inventori</button>
+                <button onclick="showSection('importanza')" class="hover:text-amber-400 transition-colors">Importanza della Misura</button>
+            </nav>
+        </div>
     </header>
 
-    <!-- DETTAGLI OROLOGIO 1 -->
-    <div id="orologio-1" class="page-dettaglio container">
-        <div class="dettaglio-content">
-            <img src="https://finwatchstraps.com/cdn/shop/articles/designing-the-perfect-watch-strap-with-finwatchstraps-your-timepieces-ideal-companion-572643.jpg?v=1692588236" alt="Chronos Classic" class="dettaglio-img">
-            <div class="dettaglio-info">
-                <h2>Chronos Classic</h2>
-                <div class="prezzo">€ 1.250,00</div>
-                <p>Un segnatempo elegante progettato per chi apprezza lo stile intramontabile e la precisione artigianale.</p>
-                <ul>
-                    <li><strong>Cassa:</strong> Acciaio Inox 40mm</li>
-                    <li><strong>Movimento:</strong> Automatico Svizzero</li>
-                    <li><strong>Cinturino:</strong> Vera Pelle Marrone</li>
-                    <li><strong>Vetro:</strong> Zaffiro antigraffio</li>
-                    <li><strong>Resistenza all'acqua:</strong> 50 metri</li>
-                </ul>
-                <a href="#collezione" class="btn btn-back">← Torna alla Collezione</a>
-            </div>
-        </div>
-    </div>
+    <!-- CONTENUTO PRINCIPALE -->
+    <main class="flex-grow">
 
-    <!-- DETTAGLI OROLOGIO 2 -->
-    <div id="orologio-2" class="page-dettaglio container">
-        <div class="dettaglio-content">
-            <img src="https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=600&q=80" alt="Ocean Diver" class="dettaglio-img">
-            <div class="dettaglio-info">
-                <h2>Ocean Diver Professional</h2>
-                <div class="prezzo">€ 2.100,00</div>
-                <p>Progettato per le esplorazioni sottomarine più estreme, unisce massima visibilità e tenuta stagna impeccabile.</p>
-                <ul>
-                    <li><strong>Cassa:</strong> Titanio 42mm</li>
-                    <li><strong>Movimento:</strong> Calibro Subacqueo Automatico</li>
-                    <li><strong>Cinturino:</strong> Gomma ad alta resistenza</li>
-                    <li><strong>Lunetta:</strong> Ceramica unidirezionale</li>
-                    <li><strong>Resistenza all'acqua:</strong> 300 metri</li>
-                </ul>
-                <a href="#collezione" class="btn btn-back">← Torna alla Collezione</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- DETTAGLI OROLOGIO 3 -->
-    <div id="orologio-3" class="page-dettaglio container">
-        <div class="dettaglio-content">
-            <img src="https://lorologiese.com/wp-content/uploads/2024/01/UNIVERSAL-AERO-COMPAX-22287-AP-SLV-BT-R-283-.jpg" alt="Aero Chrono" class="dettaglio-img">
-            <div class="dettaglio-info">
-                <h2>Aero Chronograph</h2>
-                <div class="prezzo">€ 3.450,00</div>
-                <p>Ispirato all'aviazione classica, offre funzionalità cronografiche avanzate racchiuse in un design audace.</p>
-                <ul>
-                    <li><strong>Cassa:</strong> Acciaio PVD Nero 44mm</li>
-                    <li><strong>Movimento:</strong> Cronografo Meccanico</li>
-                    <li><strong>Cinturino:</strong> Maglia di Acciaio</li>
-                    <li><strong>Quadrante:</strong> Luminescenza Super-LumiNova</li>
-                    <li><strong>Resistenza all'acqua:</strong> 100 metri</li>
-                </ul>
-                <a href="#collezione" class="btn btn-back">← Torna alla Collezione</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- DETTAGLI OROLOGIO 4 -->
-    <div id="orologio-4" class="page-dettaglio container">
-        <div class="dettaglio-content">
-            <img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=600&q=80" alt="Heritage Tourbillon" class="dettaglio-img">
-            <div class="dettaglio-info">
-                <h2>Heritage Tourbillon</h2>
-                <div class="prezzo">€ 8.900,00</div>
-                <p>Il vertice dell'alta orologeria: meccanismo Tourbillon a vista con rifiniture a mano e riserva di carica di 72 ore.</p>
-                <ul>
-                    <li><strong>Cassa:</strong> Oro Rosa 18k 41mm</li>
-                    <li><strong>Movimento:</strong> Tourbillon Manuale</li>
-                    <li><strong>Cinturino:</strong> Alligatore Nero</li>
-                    <li><strong>Fondello:</strong> Zaffiro Trasparente</li>
-                    <li><strong>Resistenza all'acqua:</strong> 30 metri</li>
-                </ul>
-                <a href="#collezione" class="btn btn-back">← Torna alla Collezione</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- DETTAGLI OROLOGIO 5 -->
-    <div id="orologio-5" class="page-dettaglio container">
-        <div class="dettaglio-content">
-            <img src="https://img01.ztat.net/article/spp-media-p1/4fb608be70c0489e9011a2b22bf5d856/e1e07b22679849bab6fb887039d7876d.jpg?imwidth=1800" alt="Lunar Phase" class="dettaglio-img">
-            <div class="dettaglio-info">
-                <h2>Lunar Phase Excellence</h2>
-                <div class="prezzo">€ 4.600,00</div>
-                <p>Un'opera d'arte astronomica con complicazione delle fasi lunari ed esecuzione del quadrante in madreperla.</p>
-                <ul>
-                    <li><strong>Cassa:</strong> Acciaio Inox Lucidato 41mm</li>
-                    <li><strong>Movimento:</strong> Automatico con Fasi Lunari</li>
-                    <li><strong>Cinturino:</strong> Pelle Blu Notte</li>
-                    <li><strong>Vetro:</strong> Zaffiro Antiriflesso</li>
-                    <li><strong>Resistenza all'acqua:</strong> 50 metri</li>
-                </ul>
-                <a href="#collezione" class="btn btn-back">← Torna alla Collezione</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- DETTAGLI OROLOGIO 6 -->
-    <div id="orologio-6" class="page-dettaglio container">
-        <div class="dettaglio-content">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvvZbbaZ6AT1lPa12gpKWmcOBBe2u5-WPbvkRCOeQ54e-Shj833833OrlZ&s=10" alt="Vanguard Skeleton" class="dettaglio-img">
-            <div class="dettaglio-info">
-                <h2>Vanguard Skeleton</h2>
-                <div class="prezzo">€ 5.800,00</div>
-                <p>Architettura d'avanguardia con movimento scheletrato a vista che rivela l'armonia interna dell'orologio.</p>
-                <ul>
-                    <li><strong>Cassa:</strong> Carbonio e Titanio 43mm</li>
-                    <li><strong>Movimento:</strong> Meccanico Scheletrato Manuale</li>
-                    <li><strong>Cinturino:</strong> Caucciù e Tessuto Tecnico</li>
-                    <li><strong>Quadrante:</strong> Trasparente in Zaffiro</li>
-                    <li><strong>Resistenza all'acqua:</strong> 100 metri</li>
-                </ul>
-                <a href="#collezione" class="btn btn-back">← Torna alla Collezione</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- STRUTTURA PRINCIPALE DEL SITO -->
-    <div id="catalogo">
-        <!-- HERO -->
-        <section class="hero">
-            <h1>L'Arte del Tempo al Tuo Polso</h1>
-            <p>Esplora la nostra selezione esclusiva di orologi meccanici ed estetica di altissima precisione.</p>
-            <a href="#collezione" class="btn">Scopri la Collezione</a>
-        </section>
-
-        <!-- SEZIONE STORIA -->
-        <section id="storia" class="container">
-            <h2 class="section-title">La Nostra Storia</h2>
-            <p class="section-subtitle">Oltre un secolo di passione per l'alta orologeria</p>
-
-            <div class="storia-box">
-                <div class="storia-text">
-                    <h3>Tradizione dal 1898</h3>
-                    <p>Fondata nel cuore della Svizzera, Horologium nasce con una missione precisa: unire l'antica arte dell'assemblaggio manuale alle moderne innovazioni tecnologiche.</p>
-                    <p>Ogni componente dei nostri orologi viene testato e rifinito a mano dai nostri maestri orologiai per garantire una durata nel tempo e un'accuratezza senza compromessi.</p>
-                    <p>Crediamo che un orologio non sia un semplice oggetto, ma una testimonianza di stile personale e memoria tramandata di generazione in generazione.</p>
+        <!-- ==================== HOME SECTION ==================== -->
+        <div id="home" class="section-view active">
+            <!-- Hero Banner -->
+            <section class="relative py-20 px-6 overflow-hidden border-b border-amber-900/20">
+                <div class="max-w-5xl mx-auto text-center relative z-10">
+                    <span class="inline-block px-4 py-1.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-semibold tracking-widest uppercase mb-6">
+                        L'Evoluzione del Tempo
+                    </span>
+                    <h1 class="font-serif-title text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6">
+                        Dalle Ombre del Sole alla <br><span class="gold-gradient-text">Precisione Meccanica</span>
+                    </h1>
+                    <p class="text-gray-400 text-lg max-w-2xl mx-auto font-light leading-relaxed mb-10">
+                        Esplora l'affascinante viaggio dell'umanità nel tentativo di dominare, misurare e comprendere la risorsa più preziosa dell'universo: il Tempo.
+                    </p>
                 </div>
-                <img src="https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=600&q=80" alt="Laboratorio Orologi" class="storia-img">
-            </div>
-        </section>
+            </section>
 
-        <!-- SEZIONE CATALOGO -->
-        <section id="collezione" class="container">
-            <h2 class="section-title">La Collezione</h2>
-            <p class="section-subtitle">Scegli il modello che meglio definisce il tuo stile</p>
+            <!-- 3 CARD PRINCIPALI (I 3 Link Richiesti) -->
+            <section class="max-w-7xl mx-auto px-6 py-16">
+                <h2 class="text-center font-serif-title text-2xl text-amber-200/80 mb-12 uppercase tracking-widest text-sm">
+                    Scegli una sezione da esplorare
+                </h2>
 
-            <div class="grid-orologi">
-                <!-- Card 1 -->
-                <div class="card">
-                    <img src="https://lorologiese.com/wp-content/uploads/2024/01/UNIVERSAL-AERO-COMPAX-22287-AP-SLV-BT-R-283-.jpg" alt="Chronos Classic">
-                    <div class="card-content">
-                        <h3 class="card-title">Chronos Classic</h3>
-                        <div class="card-price">€ 1.250,00</div>
-                        <p class="card-desc">Design classico con movimento automatico e cinturino in pelle finemente lavorata.</p>
-                        <a href="#orologio-1" class="btn">Vedi Dettagli</a>
-                    </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?auto=format&fit=crop&w=600&q=80" alt="Ocean Diver">
-                    <div class="card-content">
-                        <h3 class="card-title">Ocean Diver Pro</h3>
-                        <div class="card-price">€ 2.100,00</div>
-                        <p class="card-desc">Resistente e impermeabile, ideale per chi ama le immersioni e l'avventura.</p>
-                        <a href="#orologio-2" class="btn">Vedi Dettagli</a>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="card">
-                    <img src="https://watchesofknightsbridge.com/wp-content/uploads/2023/12/CUR150.jpg" alt="Aero Chrono">
-                    <div class="card-content">
-                        <h3 class="card-title">Aero Chronograph</h3>
-                        <div class="card-price">€ 3.450,00</div>
-                        <p class="card-desc">Ispirato al mondo dell'aviazione, con cronometro integrato di alta precisione.</p>
-                        <a href="#orologio-3" class="btn">Vedi Dettagli</a>
-                    </div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=600&q=80" alt="Heritage Tourbillon">
-                    <div class="card-content">
-                        <h3 class="card-title">Heritage Tourbillon</h3>
-                        <div class="card-price">€ 8.900,00</div>
-                        <p class="card-desc">Capolavoro di meccanica in oro rosa con complicazione Tourbillon a vista.</p>
-                        <a href="#orologio-4" class="btn">Vedi Dettagli</a>
-                    </div>
-                </div>
-
-                <!-- Card 5 -->
-                <div class="card">
-                    <img src="https://img01.ztat.net/article/spp-media-p1/4fb608be70c0489e9011a2b22bf5d856/e1e07b22679849bab6fb887039d7876d.jpg?imwidth=1800" alt="Lunar Phase">
-                    <div class="card-content">
-                        <h3 class="card-title">Lunar Phase Excellence</h3>
-                        <div class="card-price">€ 4.600,00</div>
-                        <p class="card-desc">Complicazione con fasi lunari e finiture in oro e pelle blu notte.</p>
-                        <a href="#orologio-5" class="btn">Vedi Dettagli</a>
-                    </div>
-                </div>
-
-                <!-- Card 6 -->
-                <div class="card">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvvZbbaZ6AT1lPa12gpKWmcOBBe2u5-WPbvkRCOeQ54e-Shj833833OrlZ&s=10" alt="Vanguard Skeleton">
-                    <div class="card-content">
-                        <h3 class="card-title">Vanguard Skeleton</h3>
-                        <div class="card-price">€ 5.800,00</div>
-                        <p class="card-desc">Design moderno con cassa in titanio e meccanismo scheletrato a vista.</p>
-                        <a href="#orologio-6" class="btn">Vedi Dettagli</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SEZIONE BOUTIQUE & CONTATTI -->
-        <section id="contatti" class="container">
-            <h2 class="section-title">Boutique & Contatti</h2>
-            <p class="section-subtitle">Vieni a trovarci o richiedi un appuntamento con i nostri esperti</p>
-
-            <div class="contatti-grid">
-                <!-- Informazioni di contatto -->
-                <div class="info-card">
-                    <h3>La Nostra Boutique</h3>
-                    <div class="info-item">
-                        <strong>Indirizzo:</strong>
-                        Via Montenapoleone 14, 20121 Milano (MI)
-                    </div>
-                    <div class="info-item">
-                        <strong>Orari di Apertura:</strong>
-                        Lunedì - Sabato: 10:00 - 19:30<br>Domenica: Su appuntamento
-                    </div>
-                    <div class="info-item">
-                        <strong>Contatti Diretti:</strong>
-                        Telefono: +39 02 1234 5678<br>Email: boutique@horologium.it
-                    </div>
-                    <div class="map-placeholder">
-                        📍 Mappa Boutique Milano
-                    </div>
-                </div>
-
-                <!-- Modulo di messaggio -->
-                <div class="form-card">
-                    <h3>Scrivici un Messaggio</h3>
-                    <form onsubmit="event.preventDefault(); alert('Messaggio inviato con successo! Ti risponderemo a breve.');">
-                        <div class="form-group">
-                            <label for="nome">Nome e Cognome</label>
-                            <input type="text" id="nome" placeholder="Es. Mario Rossi" required>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Card 1: Origini Antiche -->
+                    <div onclick="showSection('origini')" class="cursor-pointer group rounded-2xl bg-zinc-900/80 p-8 border gold-border gold-card-hover transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-6 group-hover:scale-110 transition-transform">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="font-serif-title text-2xl font-bold text-white mb-3 group-hover:text-amber-400 transition-colors">
+                                Origini Antiche
+                            </h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                                Scopri come le civiltà egizie, babilonesi e greche utilizzavano ombre, acqua e candele per calcolare lo scorrere delle ore.
+                            </p>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" placeholder="nome@esempio.it" required>
+                        <div class="flex items-center text-amber-400 font-medium text-sm gap-2 group-hover:translate-x-2 transition-transform">
+                            <span>Esplora le Origini</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                         </div>
-                        <div class="form-group">
-                            <label for="messaggio">Messaggio o Richiesta Appuntamento</label>
-                            <textarea id="messaggio" rows="4" placeholder="Come possiamo aiutarti?" required></textarea>
+                    </div>
+
+                    <!-- Card 2: Grandi Inventori -->
+                    <div onclick="showSection('inventori')" class="cursor-pointer group rounded-2xl bg-zinc-900/80 p-8 border gold-border gold-card-hover transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-6 group-hover:scale-110 transition-transform">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7m-7 7h14a7 7m-7 0a7 7 0 01-7-7"></path>
+                                </svg>
+                            </div>
+                            <h3 class="font-serif-title text-2xl font-bold text-white mb-3 group-hover:text-amber-400 transition-colors">
+                                Persone Importanti
+                            </h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                                Conosci i geni e i maestri orologiai come Huygens, Harrison e Breguet che hanno rivoluzionato l'ingegneria dei segnatempo.
+                            </p>
                         </div>
-                        <button type="submit" class="btn" style="width: 100%;">Invia Richiesta</button>
-                    </form>
+                        <div class="flex items-center text-amber-400 font-medium text-sm gap-2 group-hover:translate-x-2 transition-transform">
+                            <span>Scopri gli Inventori</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Importanza -->
+                    <div onclick="showSection('importanza')" class="cursor-pointer group rounded-2xl bg-zinc-900/80 p-8 border gold-border gold-card-hover transition-all duration-300 flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-6 group-hover:scale-110 transition-transform">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h1.5a2.5 2.5 0 002.5-2.5V11.4M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="font-serif-title text-2xl font-bold text-white mb-3 group-hover:text-amber-400 transition-colors">
+                                Importanza dell'Orologio
+                            </h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                                Comprendi l'impatto straordinario della misurazione del tempo sulla navigazione marittima, la rivoluzione industriale e la società moderna.
+                            </p>
+                        </div>
+                        <div class="flex items-center text-amber-400 font-medium text-sm gap-2 group-hover:translate-x-2 transition-transform">
+                            <span>Leggi l'Impatto</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ==================== SEZIONE 1: ORIGINI ANTICHE ==================== -->
+        <div id="origini" class="section-view">
+            <div class="max-w-5xl mx-auto px-6 py-12">
+                <button onclick="showSection('home')" class="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 text-sm mb-8 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Torna alla Home
+                </button>
+
+                <h1 class="font-serif-title text-4xl md:text-5xl font-extrabold text-white mb-6">
+                    Le Origini Antiche <span class="gold-gradient-text">della Misura del Tempo</span>
+                </h1>
+                <p class="text-gray-300 text-lg leading-relaxed mb-12">
+                    Prima dell'invenzione dei meccanismi a ingranaggi, l'uomo ha dovuto fare affidamento sui fenomeni naturali costanti per scandire il ritmo delle proprie giornate.
+                </p>
+
+                <div class="space-y-8">
+                    <!-- Articolo 1 -->
+                    <div class="bg-zinc-900/60 p-8 rounded-2xl border border-zinc-800">
+                        <div class="text-amber-400 font-mono text-sm mb-2">3500 a.C.</div>
+                        <h3 class="font-serif-title text-2xl font-bold text-white mb-4">Meridiane e Obelischi (Egitto e Babilonia)</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Gli antichi Egizi e Babilonesi furono i primi ad erigere imponenti obelischi. L'ombra proiettata dalla struttura sul terreno consentiva di dividere la giornata in due parti e di identificare con precisione il mezzogiorno. Successivamente nacquero le meridiane portatili e i quadranti solari, perfezionati dai Greci con calcoli geometrici.
+                        </p>
+                    </div>
+
+                    <!-- Articolo 2 -->
+                    <div class="bg-zinc-900/60 p-8 rounded-2xl border border-zinc-800">
+                        <div class="text-amber-400 font-mono text-sm mb-2">1500 a.C.</div>
+                        <h3 class="font-serif-title text-2xl font-bold text-white mb-4">La Clessidra ad Acqua (Clessidre fluide)</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Poiché le meridiane erano inutilizzabili di notte o durante i giorni nuvolosi, nacquero le *clessidre ad acqua* (dette anche *klepsydra*). Un recipiente forato faceva defluire un flusso d'acqua costante. Il livello dell'acqua indicava il passare del tempo, indipendentemente dalla luce solare.
+                        </p>
+                    </div>
+
+                    <!-- Articolo 3 -->
+                    <div class="bg-zinc-900/60 p-8 rounded-2xl border border-zinc-800">
+                        <div class="text-amber-400 font-mono text-sm mb-2">Medioevo</div>
+                        <h3 class="font-serif-title text-2xl font-bold text-white mb-4">Candele Gradurate e Clessidre a Sabbia</h3>
+                        <p class="text-gray-400 leading-relaxed">
+                            Nel Medioevo si diffondono le candele graduate (utilizzate celebremente da Alfredo il Grande): consumandosi a velocità costante, le tacche sulla cera indicavano le ore trascorse. Successivamente, la nascita del vetro soffiato permise l'invenzione della classica clessidra a sabbia, ideale anche per le imbarcazioni.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
 
-    <footer>
-        <p>&copy; 2026 Horologium - Tutti i diritti riservati.</p>
+
+        <!-- ==================== SEZIONE 2: INVENTORI IMPORTANTI ==================== -->
+        <div id="inventori" class="section-view">
+            <div class="max-w-5xl mx-auto px-6 py-12">
+                <button onclick="showSection('home')" class="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 text-sm mb-8 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Torna alla Home
+                </button>
+
+                <h1 class="font-serif-title text-4xl md:text-5xl font-extrabold text-white mb-6">
+                    I Grandi Inventori <span class="gold-gradient-text">e Orologiai</span>
+                </h1>
+                <p class="text-gray-300 text-lg leading-relaxed mb-12">
+                    Dietro ogni ticchettio si nasconde il genio di scienziati, matematici e artigiani che hanno trasformato l'orologeria in un'arte di alta precisione.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Personaggio 1 -->
+                    <div class="bg-zinc-900/60 p-8 rounded-2xl border border-zinc-800 flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs font-semibold uppercase text-amber-500 mb-2">1629 – 1695</div>
+                            <h3 class="font-serif-title text-2xl font-bold text-white mb-3">Christiaan Huygens</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                                Matematico ed astronomo olandese, Huygens brevettò nel 1656 il primo **orologio a pendolo**, basandosi sugli studi teorici di Galileo Galilei. Questa invenzione ridusse l'errore giornaliero degli orologi da quasi 15 minuti a pochi secondi.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Personaggio 2 -->
+                    <div class="bg-zinc-900/60 p-8 rounded-2xl border border-zinc-800 flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs font-semibold uppercase text-amber-500 mb-2">1693 – 1776</div>
+                            <h3 class="font-serif-title text-2xl font-bold text-white mb-3">John Harrison</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                                Falegname e orologiaio inglese autodidatta, Harrison risolse il celebre "problema della longitudine". Creò il primo **cronometro marino (H4)** in grado di mantenere una precisione assoluta anche sulle navi in mezzo alle tempeste oceaniche.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Personaggio 3 -->
+                    <div class="bg-zinc-900/60 p-8 rounded-2xl border border-zinc-800 flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs font-semibold uppercase text-amber-500 mb-2">1747 – 1823</div>
+                            <h3 class="font-serif-title text-2xl font-bold text-white mb-3">Abraham-Louis Breguet</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                                Considerato il più grande genio dell'orologeria di tutti i tempi. Breguet inventò il **Tourbillon** (per annullare gli effetti della gravità sul movimento) e la molla del bilanciere con curva terminale (spirale Breguet).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Personaggio 4 -->
+                    <div class="bg-zinc-900/60 p-8 rounded-2xl border border-zinc-800 flex flex-col justify-between">
+                        <div>
+                            <div class="text-xs font-semibold uppercase text-amber-500 mb-2">1868 – 1957</div>
+                            <h3 class="font-serif-title text-2xl font-bold text-white mb-3">Patek Philippe e Louis Cartier</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                                Tra la fine dell'Ottocento e l'inizio del Novecento, queste maison hanno rivoluzionato la moda creando i primi **orologi da polso moderni**, rendendoli uno strumento personale da indossare ogni giorno anziché da tenere in tasca.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ==================== SEZIONE 3: IMPORTANZA DELL'OROLOGIO ==================== -->
+        <div id="importanza" class="section-view">
+            <div class="max-w-5xl mx-auto px-6 py-12">
+                <button onclick="showSection('home')" class="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 text-sm mb-8 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Torna alla Home
+                </button>
+
+                <h1 class="font-serif-title text-4xl md:text-5xl font-extrabold text-white mb-6">
+                    L'Importanza <span class="gold-gradient-text">dell'Orologio nella Storia</span>
+                </h1>
+                <p class="text-gray-300 text-lg leading-relaxed mb-12">
+                    L'orologio non è stato soltanto un utensile di misurazione, ma il vero motore della sincronizzazione umana e del progresso scientifico.
+                </p>
+
+                <div class="space-y-8">
+                    <!-- Punto 1 -->
+                    <div class="flex gap-6 p-6 bg-zinc-900/60 rounded-2xl border border-zinc-800">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center font-bold font-serif-title text-xl">1</div>
+                        <div>
+                            <h3 class="font-serif-title text-xl font-bold text-white mb-2">Navigazione e Cartografia</h3>
+                            <p class="text-gray-400 leading-relaxed text-sm">
+                                Senza un orologio preciso, le grandi esplorazioni marittime del XVIII secolo causavano spesso naufragi tragici. Sapere con esattezza l'ora del punto di partenza permetteva ai navigatori di calcolare la longitudine esatta in mezzo all'oceano.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Punto 2 -->
+                    <div class="flex gap-6 p-6 bg-zinc-900/60 rounded-2xl border border-zinc-800">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center font-bold font-serif-title text-xl">2</div>
+                        <div>
+                            <h3 class="font-serif-title text-xl font-bold text-white mb-2">La Rivoluzione Industriale</h3>
+                            <p class="text-gray-400 leading-relaxed text-sm">
+                                Con l'avvento delle fabbriche, dei treni e delle stazioni ferroviarie, il tempo non poteva più essere approssimativo. La sincronizzazione degli orari ha permesso la nascita dei fusi orari internazionali e il lavoro coordinato su larga scala.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Punto 3 -->
+                    <div class="flex gap-6 p-6 bg-zinc-900/60 rounded-2xl border border-zinc-800">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center font-bold font-serif-title text-xl">3</div>
+                        <div>
+                            <h3 class="font-serif-title text-xl font-bold text-white mb-2">Scienza e Tecnologia Moderna</h3>
+                            <p class="text-gray-400 leading-relaxed text-sm">
+                                Dagli orologi atomici al cesio fino ai chip dei nostri smartphone e ai satelliti GPS: la tecnologia moderna si fonda sulla precisione al miliardesimo di secondo per permettere comunicazioni, internet e navigazione satellitare.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-zinc-800 bg-black/50 py-8 px-6 text-center text-xs text-gray-500">
+        <p>© Tempus - La Storia dell'Orologio. Tutti i diritti riservati.</p>
     </footer>
 
+    <!-- SCRIPT PER LA NAVIGAZIONE TRA SEZIONI -->
+    <script>
+        function showSection(sectionId) {
+            // Nasconde tutte le sezioni
+            const sections = document.querySelectorAll('.section-view');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            // Mostra la sezione selezionata
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // Torna all'inizio della pagina con scroll fluido
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
